@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout web app</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="page-header text-center">
+                <h1>Workout <small>web app</small></h1>
+            </div>
+        </div>
+        <div v-if="loggedIn" class="container">
+            <div class="row">
+                <router-link to="/home">Home</router-link>
+                <a href="#" class="pull-right" v-on:click.prevent="_logOut">Logout</a>
+            </div>
+        </div>
+        <transition name="fade" mode="out-in">
+            <router-view v-on:logged-in="__loggedIn"></router-view>
+        </transition>
+    </div>
+
+    <template id="login">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <form v-on:submit.prevent="_login">
+                        <div class="from-group">
+                            <label for="username">Username</label>
+                            <input v-model="username" class="form-control" type="text" id="username" placeholder="Username">
+                        </div>
+                        <br>
+                        <div class="from-group">
+                            <label for="password">Password</label>
+                            <input v-model="password" class="form-control" type="password" id="password" placeholder="Password">
+                        </div>
+                        <br>
+                        <div class="row text-center">
+                            <button type="submit" class="btn btn-default">LogIn</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <router-link to="/create/workout">Create workout</router-link>
+                    <router-link to="/list/workouts">List workouts</router-link>
+                    <br>
+                    <router-link to="/create/exercise">Create exercise</router-link>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="workout-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form v-on:submit.prevent="_submit">
+                        <div class="from-group">
+                            <div class="text-success">{{ message }}</div>
+                            <div class="text-danger">{{ errors.name }}</div>
+                            <label for="workout.name">Name</label>
+                            <input v-model="workout.name" class="form-control" type="text" id="workout.name" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div v-for="exercise in formOptions.exercises" class="col-xs-12">
+                                        {{ exercise.name }} <button type="button" v-on:click.prevent="_addExercise(exercise)">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div v-for="exercise in workout.exercises" class="col-xs-12">
+                                        #{{ exercise.id }} {{ exercise.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="from-group text-right">
+                            <button type="submit" class="btn btn-default">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="workout-list">
+        <div class="container">
+            <div class="row">
+                <div v-for="workout in workouts" class="col-xs-12">
+                    {{ workout.name }}
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="exercise-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form v-on:submit.prevent="_submit">
+                        <div class="from-group">
+                            <div class="text-success">{{ message }}</div>
+                            <div class="text-danger">{{ errors.name }}</div>
+                            <label for="exercise.name">Name</label>
+                            <input v-model="exercise.name" class="form-control" type="text" id="exercise.name" placeholder="Name">
+                        </div>
+                        <br>
+                        <div class="from-group text-right">
+                            <button type="submit" class="btn btn-default">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/vue-resource.js"></script>
+    <script src="/js/vue-router.js"></script>
+    <script src="/js/app.js"></script>
+
+</body>
+</html>
