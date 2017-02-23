@@ -5,6 +5,7 @@
     <title>Workout web app</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <div id="app">
@@ -82,8 +83,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
-                                    <div v-for="exercise in workout.exercises" class="col-xs-12">
-                                        #{{ exercise.id }} {{ exercise.name }}
+                                    <div v-for="exercise in workout.workoutExerciseOrder" class="col-xs-12">
+                                        #{{ exercise.order }} {{ exercise.name }} {{ exercise.id }}
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +103,12 @@
         <div class="container">
             <div class="row">
                 <div v-for="workout in workouts" class="col-xs-12">
-                    {{ workout.name }}
+                    {{ workout.workout.name }}
+                    <br>
+                    <ul>
+                        <li class="text-success" v-for="exercise in workout.exercises"
+                            >#{{ exercise.order }} {{ exercise.name }}</li>
+                    </ul>
                 </div>
             </div>
         </div>

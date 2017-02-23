@@ -97,7 +97,11 @@ var workoutForm = Vue.component('workoutForm', {
         },
 
         _addExercise: function (exercise) {
-            this.workout.exercises.push(exercise);
+            this.workout.workoutExerciseOrder.push({
+                exercise: exercise.id,
+                name: exercise.name,
+                order: this.workout.workoutExerciseOrder.length + 1
+            });
         }
 
     },
@@ -105,7 +109,7 @@ var workoutForm = Vue.component('workoutForm', {
     data: function () { return {
         workout: {
             name: '',
-            exercises: [],
+            workoutExerciseOrder: [],
         },
         formOptions: {
             exercises: []
