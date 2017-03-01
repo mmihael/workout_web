@@ -166,13 +166,95 @@ var exerciseForm = Vue.component('exerciseForm', {
     },
 
     data: function () { return {
-        exercise: { name: '' },
+        exercise: { name: '', bodyWeight: false },
         message: '',
         errors: { name: '' }
     }; }
 
 });
 
+var workoutPick = Vue.component('workoutPick', {
+
+    template: document.getElementById('workout-pick').innerHTML,
+
+    beforeMount: function () {
+        this.$http.get(config.apiUrl + '/api/workout').then(
+            authProtectedRequestSuccess(function (res) { this.workouts = res.data; }.bind(this)),
+            authProtectedRequestFailed(function (res) { console.log("error"); })
+        );
+    },
+
+    methods: {
+        _startWorkout: function (workoutId) {
+            this.$http.post(config.apiUrl + '/api/user/workout', { workout: workoutId }, { headers: { 'Content-Type': 'application/json'}}).then(
+                authProtectedRequestSuccess(function (res) {
+                    console.log(res);
+                    console.log(res.body.usersWorkout.id);
+                    router.push('/users/workout/' + res.body.usersWorkout.id);
+                }.bind(this)),
+                authProtectedRequestFailed(function (res) { console.log("error"); })
+            );
+        }
+    },
+
+    data: function () { return {
+        workouts: []
+    }; }
+
+});
+
+var usersWorkout = Vue.component('usersWorkout', {
+
+    template: document.getElementById('users-workout').innerHTML,
+
+    beforeMount: function () {
+        this.$http.get(config.apiUrl + '/api/user/workout/' + this.$route.params.id).then(
+            authProtectedRequestSuccess(function (res) { this.usersWorkout = res.data; console.log(this.usersWorkout); }.bind(this)),
+            authProtectedRequestFailed(function (res) { console.log("error"); })
+        );
+    },
+
+    methods: {
+
+        _updateUsersWorkoutStatistic: function (usersWorkoutStatistic) {
+            console.log(usersWorkoutStatistic);
+            this.$http.patch(config.apiUrl + '/api/user/workout/statistic/' + usersWorkoutStatistic.id, usersWorkoutStatistic, { headers: { 'Content-Type': 'application/json'}}).then(
+                authProtectedRequestSuccess(function (res) {
+                    console.log(res);
+                }.bind(this)),
+                authProtectedRequestFailed(function (res) { console.log("error"); })
+            );
+        }
+
+    },
+
+    data: function () { return {
+        usersWorkout: {
+            workout: {},
+            usersWorkout: {},
+            exercises: {},
+            workoutExerciseOrder: {},
+            usersWorkoutStatistics: {},
+        }
+    }; }
+});
+
+var usersWorkoutList = Vue.component('usersWorkoutList', {
+
+    template: document.getElementById('users-workout-list').innerHTML,
+
+    beforeMount: function () {
+        this.$http.get(config.apiUrl + '/api/user/workout').then(
+            authProtectedRequestSuccess(function (res) { this.usersWorkouts = res.data; console.log(this.usersWorkouts); }.bind(this)),
+            authProtectedRequestFailed(function (res) { console.log("error"); })
+        );
+    },
+
+    data: function () { return {
+        usersWorkouts: []
+    }; }
+
+});
 
 var router = new VueRouter({
 
@@ -182,6 +264,9 @@ var router = new VueRouter({
         { path: '/create/workout', component: workoutForm },
         { path: '/list/workouts', component: workoutList },
         { path: '/create/exercise', component: exerciseForm },
+        { path: '/workout/pick', component: workoutPick },
+        { path: '/users/workout/:id', component: usersWorkout },
+        { path: '/list/user/workouts', component: usersWorkoutList },
     ]
 
 });

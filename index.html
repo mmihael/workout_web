@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Workout web app</title>
@@ -57,6 +57,8 @@
                 <div class="col-xs-12">
                     <router-link to="/create/workout">Create workout</router-link>
                     <router-link to="/list/workouts">List workouts</router-link>
+                    <router-link to="/workout/pick">Pick workout</router-link>
+                    <router-link to="/list/user/workouts">Edit workout statistics</router-link>
                     <br>
                     <router-link to="/create/exercise">Create exercise</router-link>
                 </div>
@@ -117,19 +119,101 @@
     <template id="exercise-form">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
+                <!--<div class="col-xs-12">-->
                     <form v-on:submit.prevent="_submit">
-                        <div class="from-group">
-                            <div class="text-success">{{ message }}</div>
-                            <div class="text-danger">{{ errors.name }}</div>
-                            <label for="exercise.name">Name</label>
-                            <input v-model="exercise.name" class="form-control" type="text" id="exercise.name" placeholder="Name">
+                        <div class="col-xs-12">
+                            <div class="from-group">
+                                <div class="text-success">{{ message }}</div>
+                                <div class="text-danger">{{ errors.name }}</div>
+                                <label for="exercise.name">Name</label>
+                                <input v-model="exercise.name" class="form-control" type="text" id="exercise.name" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <br>
+                            <div class="from-group">
+                                Weight type: <button class="btn btn-default" v-on:click="exercise.bodyWeight = !exercise.bodyWeight" type="button">
+                                    {{ exercise.bodyWeight ? 'Body weight' : 'Weights' }}
+                                </button>
+                            </div>
                         </div>
                         <br>
                         <div class="from-group text-right">
                             <button type="submit" class="btn btn-default">Create</button>
                         </div>
                     </form>
+                <!--</div>-->
+            </div>
+        </div>
+    </template>
+
+    <template id="workout-pick">
+        <div class="container">
+            <div class="row">
+                <div v-for="workout in workouts" class="col-xs-12">
+                    {{ workout.workout.name }} <button v-on:click.prevent="_startWorkout(workout.workout.id)">Start</button>
+                    <br>
+                    <ul>
+                        <li class="text-success" v-for="exercise in workout.exercises"
+                        >#{{ exercise.order }} {{ exercise.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="users-workout">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <span class="text-success">{{ usersWorkout.workout.name }}</span>
+                    <hr>
+                </div>
+            </div>
+            <div class="row" v-for="(exerciseOrder, id) in usersWorkout.workoutExerciseOrder">
+                <div class="col-xs-6">
+                    #<span class="text-muted">{{ id }}</span> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label v-bind:for="'weight-' + usersWorkout.usersWorkoutStatistics[id].id">Weight:</label>
+                            <input
+                                v-bind:disabled="usersWorkout.exercises[exerciseOrder.exercise].bodyWeight"
+                                class="form-control"
+                                v-model="usersWorkout.usersWorkoutStatistics[id].weight"
+                                type="number"
+                                v-bind:id="'weight-' + usersWorkout.usersWorkoutStatistics[id].id"
+                                v-on:change="_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label v-bind:for="'reps-' + usersWorkout.usersWorkoutStatistics[id].id">Reps:</label>
+                            <input
+                                class="form-control"
+                                v-model="usersWorkout.usersWorkoutStatistics[id].reps"
+                                type="number"
+                                v-bind:id="'reps-' + usersWorkout.usersWorkoutStatistics[id].id"
+                                v-on:change="_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12"><hr></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="users-workout-list">
+        <div class="container">
+            <div class="row">
+                <div v-for="workout in usersWorkouts" class="col-xs-12">
+                    <router-link v-bind:to="'/users/workout/' +  workout.id">
+                        #{{ workout.id }}
+                        {{ workout.workoutName }}
+                        {{ workout.createdAt }}
+                    </router-link>
+                    <hr>
                 </div>
             </div>
         </div>
