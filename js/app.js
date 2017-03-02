@@ -1,6 +1,7 @@
-var config = {
-    apiUrl: 'http://localhost:8080'
-};
+Vue.http.get('/configuration.json').then(
+function (res) {
+
+var config = res.data;
 
 Vue.http.interceptors.push(function (request, next) {
     request.credentials = true;
@@ -16,7 +17,7 @@ var authProtectedRequestSuccess = function (handler) {
 
 var authProtectedRequestFailed = function (handler) {
     return function (res) {
-        if (res.status === 401) {
+        if (res.status === 401 && app.$route != null && ['/', '/register'].indexOf(app.$route.path) == -1) {
             router.push('/');
             return;
         }
@@ -34,9 +35,14 @@ var login = Vue.component('login', {
     }; },
 
     methods: {
+
+        _goToRegister: function () {
+            router.push('/register');
+        },
+
         _login: function () {
             this.$http.post(
-                config.apiUrl + '/login',
+                config.baseUrl + '/login',
                 "username=" + encodeURIComponent(this.username) + "&password=" + encodeURIComponent(this.password),
                 { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}
             ).then(function (res) {
@@ -54,6 +60,55 @@ var login = Vue.component('login', {
 
 });
 
+var register = Vue.component('register', {
+
+    template: document.getElementById('register').innerHTML,
+
+    data: function () { return {
+        req: {
+            username: '',
+            email: '',
+            password: '',
+            passwordRepeat: ''
+        },
+        errors: {
+            username: ''
+        },
+        message: ''
+    }; },
+
+    methods: {
+
+        _goToLogin: function () {
+            router.push('/');
+        },
+
+        _register: function () {
+
+            Object.keys(this.errors).forEach(function (key) {
+                this.errors[key] = '';
+            }.bind(this));
+
+            this.$http.post(config.baseUrl + '/api/register', this.req, { headers: { 'Content-Type': 'application/json'}}).then(
+                function (res) {
+                    if (res.status === 201) {
+                        this.message = res.data.message;
+                        console.log(res.data.user);
+                    }
+                },
+                function (res) {
+                    if (res.status === 400) {
+                    console.log(res.data)
+                        Object.keys(res.data.errors).forEach(function (key) {
+                            this.$set(this.errors, key, res.data.errors[key]);
+                        }.bind(this));
+                    }
+                }
+            );
+        },
+    }
+
+});
 
 var home = Vue.component('home', {
 
@@ -68,7 +123,7 @@ var workoutForm = Vue.component('workoutForm', {
     template: document.getElementById('workout-form').innerHTML,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/exercise').then(
+        this.$http.get(config.baseUrl + '/api/exercise').then(
             authProtectedRequestSuccess(function (res) { this.formOptions.exercises = res.data; }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -77,7 +132,7 @@ var workoutForm = Vue.component('workoutForm', {
     methods: {
 
         _submit: function () {
-            this.$http.post(config.apiUrl + '/api/workout', this.workout, { headers: { 'Content-Type': 'application/json'}}).then(
+            this.$http.post(config.baseUrl + '/api/workout', this.workout, { headers: { 'Content-Type': 'application/json'}}).then(
                 authProtectedRequestSuccess(function (res) {
                     if (res.status === 201) {
                         this.message = res.data.message;
@@ -125,7 +180,7 @@ var workoutList = Vue.component('workoutList', {
     template: document.getElementById('workout-list').innerHTML,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/workout').then(
+        this.$http.get(config.baseUrl + '/api/workout').then(
             authProtectedRequestSuccess(function (res) { this.workouts = res.data; }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -144,7 +199,7 @@ var exerciseForm = Vue.component('exerciseForm', {
     methods: {
 
         _submit: function () {
-            this.$http.post(config.apiUrl + '/api/exercise', this.exercise, { headers: { 'Content-Type': 'application/json'}}).then(
+            this.$http.post(config.baseUrl + '/api/exercise', this.exercise, { headers: { 'Content-Type': 'application/json'}}).then(
                 authProtectedRequestSuccess(function (res) {
                     if (res.status === 201) {
                         this.message = res.data.message;
@@ -178,7 +233,7 @@ var workoutPick = Vue.component('workoutPick', {
     template: document.getElementById('workout-pick').innerHTML,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/workout').then(
+        this.$http.get(config.baseUrl + '/api/workout').then(
             authProtectedRequestSuccess(function (res) { this.workouts = res.data; }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -186,7 +241,7 @@ var workoutPick = Vue.component('workoutPick', {
 
     methods: {
         _startWorkout: function (workoutId) {
-            this.$http.post(config.apiUrl + '/api/user/workout', { workout: workoutId }, { headers: { 'Content-Type': 'application/json'}}).then(
+            this.$http.post(config.baseUrl + '/api/user/workout', { workout: workoutId }, { headers: { 'Content-Type': 'application/json'}}).then(
                 authProtectedRequestSuccess(function (res) {
                     console.log(res);
                     console.log(res.body.usersWorkout.id);
@@ -208,7 +263,7 @@ var usersWorkout = Vue.component('usersWorkout', {
     template: document.getElementById('users-workout').innerHTML,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/user/workout/' + this.$route.params.id).then(
+        this.$http.get(config.baseUrl + '/api/user/workout/' + this.$route.params.id).then(
             authProtectedRequestSuccess(function (res) { this.usersWorkout = res.data; console.log(this.usersWorkout); }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -218,7 +273,7 @@ var usersWorkout = Vue.component('usersWorkout', {
 
         _updateUsersWorkoutStatistic: function (usersWorkoutStatistic) {
             console.log(usersWorkoutStatistic);
-            this.$http.patch(config.apiUrl + '/api/user/workout/statistic/' + usersWorkoutStatistic.id, usersWorkoutStatistic, { headers: { 'Content-Type': 'application/json'}}).then(
+            this.$http.patch(config.baseUrl + '/api/user/workout/statistic/' + usersWorkoutStatistic.id, usersWorkoutStatistic, { headers: { 'Content-Type': 'application/json'}}).then(
                 authProtectedRequestSuccess(function (res) {
                     console.log(res);
                 }.bind(this)),
@@ -244,7 +299,7 @@ var usersWorkoutList = Vue.component('usersWorkoutList', {
     template: document.getElementById('users-workout-list').innerHTML,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/user/workout').then(
+        this.$http.get(config.baseUrl + '/api/user/workout').then(
             authProtectedRequestSuccess(function (res) { this.usersWorkouts = res.data; console.log(this.usersWorkouts); }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -260,6 +315,7 @@ var router = new VueRouter({
 
     routes: [
         { path: '/', component: login },
+        { path: '/register', component: register },
         { path: '/home', component: home },
         { path: '/create/workout', component: workoutForm },
         { path: '/list/workouts', component: workoutList },
@@ -285,7 +341,7 @@ var app = new Vue({
     router: router,
 
     beforeMount: function () {
-        this.$http.get(config.apiUrl + '/api/auth-status').then(
+        this.$http.get(config.baseUrl + '/api/auth-status').then(
             authProtectedRequestSuccess(function (res) { this.status = res.data.status; }.bind(this)),
             authProtectedRequestFailed(function (res) { console.log("error"); })
         );
@@ -300,7 +356,7 @@ var app = new Vue({
         __loggedIn: function () { this.loggedIn = true; router.push('/home'); },
 
         _logOut: function () {
-            this.$http.get(config.apiUrl + '/logout').then(
+            this.$http.get(config.baseUrl + '/logout').then(
                 function (res) { if (res.status === 200) { this.loggedIn = false; router.push('/'); } },
                 function (res) { console.log(res); }
             );
@@ -308,3 +364,10 @@ var app = new Vue({
     }
 
 });
+
+},
+function (res) {
+console.log("Can't find config json");
+console.log(res);
+}
+);

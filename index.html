@@ -43,6 +43,7 @@
                         <br>
                         <div class="row text-center">
                             <button type="submit" class="btn btn-default">LogIn</button>
+                            <button type="button" class="btn btn-default" v-on:click.prevent="_goToRegister">Register</button>
                         </div>
                     </form>
                 </div>
@@ -171,12 +172,12 @@
                 </div>
             </div>
             <div class="row" v-for="(exerciseOrder, id) in usersWorkout.workoutExerciseOrder">
-                <div class="col-xs-6">
+                <div class="col-md-6 col-xs-12">
                     #<span class="text-muted">{{ id }}</span> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}
                 </div>
-                <div class="col-xs-6">
+                <!--<div class="col-xs-6">-->
                     <div class="form-inline">
-                        <div class="form-group">
+                        <div class="form-group col-md-3 col-xs-6">
                             <label v-bind:for="'weight-' + usersWorkout.usersWorkoutStatistics[id].id">Weight:</label>
                             <input
                                 v-bind:disabled="usersWorkout.exercises[exerciseOrder.exercise].bodyWeight"
@@ -187,7 +188,7 @@
                                 v-on:change="_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])"
                             >
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-3 col-xs-6">
                             <label v-bind:for="'reps-' + usersWorkout.usersWorkoutStatistics[id].id">Reps:</label>
                             <input
                                 class="form-control"
@@ -198,7 +199,7 @@
                             >
                         </div>
                     </div>
-                </div>
+                <!--</div>-->
                 <div class="col-xs-12"><hr></div>
             </div>
         </div>
@@ -215,6 +216,47 @@
                     </router-link>
                     <hr>
                 </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="register">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <form v-on:submit.prevent="_register">
+                        <div class="from-group">
+                            <div class="text-info">{{ message }}</div>
+                            <div class="text-danger">{{ errors.username }}</div>
+                            <label for="register-username">Username</label>
+                            <input v-model="req.username" class="form-control" type="text" id="register-username" placeholder="Username">
+                        </div>
+                        <br>
+                        <div class="from-group">
+                            <div class="text-danger">{{ errors.email }}</div>
+                            <label for="register-email">Email</label>
+                            <input v-model="req.email" class="form-control" type="text" id="register-email" placeholder="Email">
+                        </div>
+                        <br>
+                        <div class="from-group">
+                            <div class="text-danger">{{ errors.password }}</div>
+                            <label for="register-password">Password</label>
+                            <input v-model="req.password" class="form-control" type="password" id="register-password" placeholder="Password">
+                        </div>
+                        <br>
+                        <div class="from-group">
+                            <label for="register-passwordr">Repeat password</label>
+                            <input v-model="req.passwordRepeat" class="form-control" type="password" id="register-passwordr" placeholder="Repeat password">
+                        </div>
+                        <br>
+                        <div class="row text-center">
+                            <button type="submit" class="btn btn-default">Register</button>
+                            <button type="button" class="btn btn-default" v-on:click.prevent="_goToLogin">LogIn</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
     </template>
