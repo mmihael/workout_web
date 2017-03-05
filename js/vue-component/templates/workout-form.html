@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form v-on:submit.prevent="_submit">
+                <div class="from-group">
+                    <div class="text-success">{{ message }}</div>
+                    <div class="text-danger">{{ errors.name }}</div>
+                    <label for="workout.name">Name</label>
+                    <input v-model="workout.name" class="form-control" type="text" id="workout.name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div v-for="exercise in formOptions.exercises" class="col-xs-12">
+                                {{ exercise.name }} <button type="button" v-on:click.prevent="_addExercise(exercise)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div v-for="exercise in workout.workoutExerciseOrder" class="col-xs-12">
+                                #{{ exercise.order }} {{ exercise.name }} {{ exercise.id }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="from-group text-right">
+                    <button type="submit" class="btn btn-default">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

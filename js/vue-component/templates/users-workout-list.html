@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+        <div v-for="workout in usersWorkouts" class="col-xs-12">
+            <router-link v-bind:to="'/users/workout/' +  workout.id">
+                #{{ workout.id }}
+                {{ workout.workoutName }}
+                {{ workout.createdAt }}
+            </router-link>
+            <hr>
+        </div>
+    </div>
+</div>

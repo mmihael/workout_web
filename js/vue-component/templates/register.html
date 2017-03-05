@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form v-on:submit.prevent="_register">
+                <div class="from-group">
+                    <div class="text-info">{{ message }}</div>
+                    <div class="text-danger">{{ errors.username }}</div>
+                    <label for="register-username">Username</label>
+                    <input v-model="req.username" class="form-control" type="text" id="register-username" placeholder="Username">
+                </div>
+                <br>
+                <div class="from-group">
+                    <div class="text-danger">{{ errors.email }}</div>
+                    <label for="register-email">Email</label>
+                    <input v-model="req.email" class="form-control" type="text" id="register-email" placeholder="Email">
+                </div>
+                <br>
+                <div class="from-group">
+                    <div class="text-danger">{{ errors.password }}</div>
+                    <label for="register-password">Password</label>
+                    <input v-model="req.password" class="form-control" type="password" id="register-password" placeholder="Password">
+                </div>
+                <br>
+                <div class="from-group">
+                    <label for="register-passwordr">Repeat password</label>
+                    <input v-model="req.passwordRepeat" class="form-control" type="password" id="register-passwordr" placeholder="Repeat password">
+                </div>
+                <br>
+                <div class="row text-center">
+                    <button type="submit" class="btn btn-default">Register</button>
+                    <button type="button" class="btn btn-default" v-on:click.prevent="_goToLogin">LogIn</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

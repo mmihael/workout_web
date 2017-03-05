@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+        <div v-for="workout in workouts" class="col-xs-12">
+            {{ workout.workout.name }}
+            <br>
+            <ul>
+                <li class="text-success" v-for="exercise in workout.exercises"
+                >#{{ exercise.order }} {{ exercise.name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>

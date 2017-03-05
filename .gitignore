@@ -1,3 +1,5 @@
 .idea/
 workout_web.iml
 configuration.json
+public/configuration.json
+node_modules/
