@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <button type="button" v-on:click="_stopWatchToggle()">Stopwatch</button>
     <div class="row">
         <div class="col-xs-12">
             <span class="text-success">{{ usersWorkout.workout.name }}</span>
@@ -35,5 +36,35 @@
         </div>
         <!--</div>-->
         <div class="col-xs-12"><hr></div>
+    </div>
+    <div v-if="stopWatch.show" class="custom-modal-container" v-on:click.self="_stopWatchToggle()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button v-on:click.stop="_stopWatchToggle()" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Stop Watch</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="stopWatch.seconds">Seconds</label>
+                                <input v-model="stopWatch.total" type="number" class="form-control" id="stopWatch.seconds" placeholder="Seconds">
+                            </div>
+                            <br>
+                            <button class="pull-right btn btn-success" v-on:click="_stopWatchStart()">Start</button>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <br>
+                            <br>
+                            <h3>{{ stopWatch.elapsed | ms-to-sec }}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button v-on:click.stop="_stopWatchToggle()" type="button" class="btn btn-default">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

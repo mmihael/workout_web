@@ -1,6 +1,11 @@
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.http.interceptors.push(function (request, next) { request.credentials = true; next(); });
+Vue.filter('ms-to-sec', function (value) {
+    var seconds = (value / 1000).toFixed(2);
+    return seconds < 10 ? ('0' + seconds) : seconds;
+});
+
 
 Vue.http.get('/configuration.json').then(
 function (res) {

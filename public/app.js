@@ -8837,17 +8837,57 @@ return Vue$3;
                 }.bind(this)),
                 this.authProtectedRequestFailed(function (res) { console.log("error"); })
             );
+        },
+
+        _stopWatchToggle: function () {
+            this.stopWatch.show = !this.stopWatch.show;
+        },
+
+        _stopWatchStart: function () {
+            if (this.audio == null) {
+                this.audio = new Audio('/beep.m4a');
+                this.audio.play();
+                this.audio.pause();
+            }
+            if (this.stopWatch.started != null) { return; }
+            this.stopWatch.started = new Date().getTime();
+            var stopWatchUpdater = function () {
+                this.stopWatch.elapsed = new Date().getTime() - this.stopWatch.started;
+                if (this.stopWatch.elapsed < this.stopWatch.total * 1000) {
+                    setTimeout(stopWatchUpdater, 250);
+                } else {
+                    var play = 3;
+                    var playFunction = function () {
+                        this.audio.play();
+                        play--;
+                        if (play > 0) {
+                            setTimeout(playFunction, 500);
+                        }
+                    }.bind(this);
+                    playFunction();
+                    this.stopWatch.elapsed = 0;
+                    this.stopWatch.started = null;
+                }
+            }.bind(this);
+            stopWatchUpdater();
         }
 
     },
 
     data: function () { return {
+        audio: null,
         usersWorkout: {
             workout: {},
             usersWorkout: {},
             exercises: {},
             workoutExerciseOrder: {},
             usersWorkoutStatistics: {},
+        },
+        stopWatch: {
+            show: false,
+            total: 60,
+            started: null,
+            elapsed: 0
         }
     }; }
 });
@@ -12834,7 +12874,7 @@ module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n      
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n            <span class=\"text-success\">{{ usersWorkout.workout.name }}</span>\r\n            <hr>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\" v-for=\"(exerciseOrder, id) in usersWorkout.workoutExerciseOrder\">\r\n        <div class=\"col-md-6 col-xs-12\">\r\n            #<span class=\"text-muted\">{{ id }}</span> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}\r\n        </div>\r\n        <!--<div class=\"col-xs-6\">-->\r\n        <div class=\"form-inline\">\r\n            <div class=\"form-group col-md-3 col-xs-6\">\r\n                <label v-bind:for=\"'weight-' + usersWorkout.usersWorkoutStatistics[id].id\">Weight:</label>\r\n                <input\r\n                        v-bind:disabled=\"usersWorkout.exercises[exerciseOrder.exercise].bodyWeight\"\r\n                        class=\"form-control\"\r\n                        v-model=\"usersWorkout.usersWorkoutStatistics[id].weight\"\r\n                        type=\"number\"\r\n                        v-bind:id=\"'weight-' + usersWorkout.usersWorkoutStatistics[id].id\"\r\n                        v-on:change=\"_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])\"\r\n                >\r\n            </div>\r\n            <div class=\"form-group col-md-3 col-xs-6\">\r\n                <label v-bind:for=\"'reps-' + usersWorkout.usersWorkoutStatistics[id].id\">Reps:</label>\r\n                <input\r\n                        class=\"form-control\"\r\n                        v-model=\"usersWorkout.usersWorkoutStatistics[id].reps\"\r\n                        type=\"number\"\r\n                        v-bind:id=\"'reps-' + usersWorkout.usersWorkoutStatistics[id].id\"\r\n                        v-on:change=\"_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])\"\r\n                >\r\n            </div>\r\n        </div>\r\n        <!--</div>-->\r\n        <div class=\"col-xs-12\"><hr></div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"container\" xmlns:v-on=\"http://www.w3.org/1999/xhtml\" xmlns:v-bind=\"http://www.w3.org/1999/xhtml\">\r\n    <button type=\"button\" v-on:click=\"_stopWatchToggle()\">Stopwatch</button>\r\n    <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n            <span class=\"text-success\">{{ usersWorkout.workout.name }}</span>\r\n            <hr>\r\n        </div>\r\n    </div>\r\n    <div class=\"row\" v-for=\"(exerciseOrder, id) in usersWorkout.workoutExerciseOrder\">\r\n        <div class=\"col-md-6 col-xs-12\">\r\n            #<span class=\"text-muted\">{{ id }}</span> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}\r\n        </div>\r\n        <!--<div class=\"col-xs-6\">-->\r\n        <div class=\"form-inline\">\r\n            <div class=\"form-group col-md-3 col-xs-6\">\r\n                <label v-bind:for=\"'weight-' + usersWorkout.usersWorkoutStatistics[id].id\">Weight:</label>\r\n                <input\r\n                        v-bind:disabled=\"usersWorkout.exercises[exerciseOrder.exercise].bodyWeight\"\r\n                        class=\"form-control\"\r\n                        v-model=\"usersWorkout.usersWorkoutStatistics[id].weight\"\r\n                        type=\"number\"\r\n                        v-bind:id=\"'weight-' + usersWorkout.usersWorkoutStatistics[id].id\"\r\n                        v-on:change=\"_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])\"\r\n                >\r\n            </div>\r\n            <div class=\"form-group col-md-3 col-xs-6\">\r\n                <label v-bind:for=\"'reps-' + usersWorkout.usersWorkoutStatistics[id].id\">Reps:</label>\r\n                <input\r\n                        class=\"form-control\"\r\n                        v-model=\"usersWorkout.usersWorkoutStatistics[id].reps\"\r\n                        type=\"number\"\r\n                        v-bind:id=\"'reps-' + usersWorkout.usersWorkoutStatistics[id].id\"\r\n                        v-on:change=\"_updateUsersWorkoutStatistic(usersWorkout.usersWorkoutStatistics[id])\"\r\n                >\r\n            </div>\r\n        </div>\r\n        <!--</div>-->\r\n        <div class=\"col-xs-12\"><hr></div>\r\n    </div>\r\n    <div v-if=\"stopWatch.show\" class=\"custom-modal-container\" v-on:click.self=\"_stopWatchToggle()\">\r\n        <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n                <div class=\"modal-header\">\r\n                    <button v-on:click.stop=\"_stopWatchToggle()\" type=\"button\" class=\"close\"><span aria-hidden=\"true\">&times;</span></button>\r\n                    <h4 class=\"modal-title\">Stop Watch</h4>\r\n                </div>\r\n                <div class=\"modal-body\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-xs-6\">\r\n                            <div class=\"form-group\">\r\n                                <label for=\"stopWatch.seconds\">Seconds</label>\r\n                                <input v-model=\"stopWatch.total\" type=\"number\" class=\"form-control\" id=\"stopWatch.seconds\" placeholder=\"Seconds\">\r\n                            </div>\r\n                            <br>\r\n                            <button class=\"pull-right btn btn-success\" v-on:click=\"_stopWatchStart()\">Start</button>\r\n                        </div>\r\n                        <div class=\"col-xs-6 text-center\">\r\n                            <br>\r\n                            <br>\r\n                            <h3>{{ stopWatch.elapsed | ms-to-sec }}</h3>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"modal-footer\">\r\n                    <button v-on:click.stop=\"_stopWatchToggle()\" type=\"button\" class=\"btn btn-default\">Close</button>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 /* 18 */
@@ -12894,6 +12934,11 @@ module.exports = g;
 /* WEBPACK VAR INJECTION */(function(Vue, VueResource, VueRouter) {Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.http.interceptors.push(function (request, next) { request.credentials = true; next(); });
+Vue.filter('ms-to-sec', function (value) {
+    var seconds = (value / 1000).toFixed(2);
+    return seconds < 10 ? ('0' + seconds) : seconds;
+});
+
 
 Vue.http.get('/configuration.json').then(
 function (res) {
