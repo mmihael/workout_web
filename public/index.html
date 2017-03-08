@@ -20,8 +20,12 @@
             </div>
         </div>
         <transition name="fade" mode="out-in">
-            <router-view v-on:logged-in="__loggedIn"></router-view>
+            <router-view v-on:logged-in="__loggedIn" v-on:notify="__notifyListener"></router-view>
         </transition>
+        <div class="notification-container">
+            <div v-for="notification in notifications" v-bind:class="'alert alert-' + notification.type" role="alert"
+                >{{ notification.message }}</div>
+        </div>
     </div>
     <script src="/app.js"></script>
 </body>

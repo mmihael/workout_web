@@ -6,6 +6,7 @@
                 {{ workout.workoutName }}
                 {{ workout.createdAt }}
             </router-link>
+            <button class="btn btn-danger" type="button" v-on:click="_deleteUsersWorkout(workout.id)">Delete</button>
             <hr>
         </div>
     </div>

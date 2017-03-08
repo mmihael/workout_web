@@ -8805,6 +8805,31 @@ return Vue$3;
         );
     },
 
+    methods: {
+        _deleteUsersWorkout: function (usersWorkoutId) {
+            this.$http.delete(this.appConfig.baseUrl + '/api/user/workout/' + usersWorkoutId).then(
+                this.authProtectedRequestSuccess(function (res) {
+                    if (res.data.status === 0) {
+                        var deleteIndex = null;
+                        for (var i = 0; i < this.usersWorkouts.length; i++) {
+                            if (this.usersWorkouts[i].id === usersWorkoutId) {
+                                deleteIndex = i;
+                                break;
+                            }
+                        }
+                        if (deleteIndex !== null) {
+                            this.usersWorkouts.splice(deleteIndex, 1);
+                            this.$emit('notify', { message: res.data.message, type: 'success' });
+                        }
+                    } else {
+                        this.$emit('notify', { message: res.data.message, type: 'danger' });
+                    }
+                }.bind(this)),
+                this.authProtectedRequestFailed(function (res) { console.log("error"); })
+            );
+        }
+    },
+
     data: function () { return {
         usersWorkouts: []
     }; }
@@ -12868,7 +12893,7 @@ module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n      
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div v-for=\"workout in usersWorkouts\" class=\"col-xs-12\">\r\n            <router-link v-bind:to=\"'/users/workout/' +  workout.id\">\r\n                #{{ workout.id }}\r\n                {{ workout.workoutName }}\r\n                {{ workout.createdAt }}\r\n            </router-link>\r\n            <hr>\r\n        </div>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div v-for=\"workout in usersWorkouts\" class=\"col-xs-12\">\r\n            <router-link v-bind:to=\"'/users/workout/' +  workout.id\">\r\n                #{{ workout.id }}\r\n                {{ workout.workoutName }}\r\n                {{ workout.createdAt }}\r\n            </router-link>\r\n            <button class=\"btn btn-danger\" type=\"button\" v-on:click=\"_deleteUsersWorkout(workout.id)\">Delete</button>\r\n            <hr>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ }),
 /* 17 */
@@ -13012,9 +13037,15 @@ var app = new Vue({
 
     data: {
         loggedIn: false,
+        notifications: []
     },
 
     methods: {
+
+        __notifyListener: function (notification) {
+            this.notifications.push(notification);
+            setTimeout(function () { this.notifications.splice(0,1); }.bind(this), 3000);
+        },
 
         __loggedIn: function () { this.loggedIn = true; router.push('/home'); },
 

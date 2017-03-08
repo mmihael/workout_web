@@ -79,9 +79,15 @@ var app = new Vue({
 
     data: {
         loggedIn: false,
+        notifications: []
     },
 
     methods: {
+
+        __notifyListener: function (notification) {
+            this.notifications.push(notification);
+            setTimeout(function () { this.notifications.splice(0,1); }.bind(this), 3000);
+        },
 
         __loggedIn: function () { this.loggedIn = true; router.push('/home'); },
 
