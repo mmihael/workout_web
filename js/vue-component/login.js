@@ -21,12 +21,12 @@ module.exports = Vue.component('login', {
             ).then(function (res) {
                 if (res.status === 200) {
                     this.$emit('logged-in');
+                    this.$emit('notify', { message: 'Logged in', type: 'success'});
                 } else {
-                    alert("Invalid login");
+                    this.$emit('notify', { message: 'Invalid username or password', type: 'danger'});
                 }
             }, function (res) {
-                console.log(0);
-                console.log(res);
+                this.$emit('notify', { message: 'Invalid username or password', type: 'danger'});
             });
         },
     }
