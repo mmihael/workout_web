@@ -13,14 +13,16 @@
             <div class="col-xs-12">
                 <br>
                 <div class="from-group">
-                    Weight type: <button class="btn btn-default" v-on:click="exercise.bodyWeight = !exercise.bodyWeight" type="button">
-                    {{ exercise.bodyWeight ? 'Body weight' : 'Weights' }}
-                </button>
+                    <label for="exercise.bodyWeight">Weight type</label><br>
+                    <button id="exercise.bodyWeight" class="btn btn-default" v-on:click="exercise.bodyWeight = !exercise.bodyWeight" type="button">
+                        {{ exercise.bodyWeight ? 'Body weight' : 'Weights' }}
+                    </button>
                 </div>
             </div>
-            <br>
-            <div class="from-group text-right">
-                <button type="submit" class="btn btn-default">Create</button>
+            <div class="col-xs-12">
+                <div class="from-group text-right">
+                    <button type="submit" class="btn btn-default">Create</button>
+                </div>
             </div>
         </form>
         <!--</div>-->

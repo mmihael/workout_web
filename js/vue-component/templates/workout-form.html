@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-xs-12">
             <form v-on:submit.prevent="_submit">
@@ -8,16 +8,24 @@
                     <label for="workout.name">Name</label>
                     <input v-model="workout.name" class="form-control" type="text" id="workout.name" placeholder="Name">
                 </div>
+                <br>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-xs-6">
-                            <div v-for="exercise in formOptions.exercises" class="col-xs-12">
-                                {{ exercise.name }} <button type="button" v-on:click.prevent="_addExercise(exercise)">+</button>
+                        <div class="col-sm-6">
+                            <div v-for="exercise in formOptions.exercises" class="col-xs-12" style="padding-bottom: 6px;">
+                                <button type="button" class="btn btn-default" style="width: 100%;"
+                                        v-on:click.prevent="_addExercise(exercise)">
+                                    <i class="fa fa-plus-circle text-success pull-left" aria-hidden="true"></i> {{ exercise.name }}
+                                </button>
                             </div>
                         </div>
-                        <div class="col-xs-6">
-                            <div v-for="exercise in workout.workoutExerciseOrder" class="col-xs-12">
-                                #{{ exercise.order }} {{ exercise.name }} {{ exercise.id }}
+                        <div class="col-sm-6">
+                            <div class="col-xs-12">
+                                <ul class="list-group">
+                                    <li v-for="exercise in workout.workoutExerciseOrder" class="list-group-item">
+                                        #{{ exercise.order }} {{ exercise.name }} {{ exercise.id }}
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

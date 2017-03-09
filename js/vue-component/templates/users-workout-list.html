@@ -1,13 +1,45 @@
 <div class="container">
     <div class="row">
-        <div v-for="workout in usersWorkouts" class="col-xs-12">
-            <router-link v-bind:to="'/users/workout/' +  workout.id">
-                #{{ workout.id }}
-                {{ workout.workoutName }}
-                {{ workout.createdAt }}
-            </router-link>
-            <button class="btn btn-danger" type="button" v-on:click="_deleteUsersWorkout(workout.id)">Delete</button>
-            <hr>
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Workout</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="workout in usersWorkouts">
+                            <td>#{{ workout.id }}</td>
+                            <td>{{ workout.workoutName }}</td>
+                            <td>{{ workout.createdAt }}</td>
+                            <td>
+                                <router-link v-bind:to="'/users/workout/' +  workout.id">
+                                    <button class="btn btn-info" type="button">
+                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                    </button>
+                                </router-link>
+                                <button class="btn btn-danger" type="button" v-on:click="_deleteUsersWorkout(workout.id)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
         </div>
+        <!--<div v-for="workout in usersWorkouts" class="col-xs-12">-->
+            <!--<router-link v-bind:to="'/users/workout/' +  workout.id">-->
+                <!--#{{ workout.id }}-->
+                <!--{{ workout.workoutName }}-->
+                <!--{{ workout.createdAt }}-->
+            <!--</router-link>-->
+            <!--<button class="btn btn-danger" type="button" v-on:click="_deleteUsersWorkout(workout.id)">Delete</button>-->
+            <!--<hr>-->
+        <!--</div>-->
     </div>
 </div>

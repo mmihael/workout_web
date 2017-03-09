@@ -2,22 +2,44 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Workout web app</title>
+    <title>Workout tracker</title>
     <link rel="stylesheet" href="/app.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 <body>
     <div id="app">
-        <div class="container">
-            <div class="page-header text-center">
-                <h1>Workout <small>web app</small></h1>
+        <div v-if="!loggedIn">
+            <div class="container">
+                <div class="page-header text-center">
+                    <h1>Workout <small>tracker</small></h1>
+                </div>
             </div>
         </div>
-        <div v-if="loggedIn" class="container">
-            <div class="row">
-                <router-link to="/home">Home</router-link>
-                <a href="#" class="pull-right" v-on:click.prevent="_logOut">Logout</a>
-            </div>
+        <div v-if="loggedIn">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button v-on:click="_mobileMenuToggle()" type="button" class="navbar-toggle collapsed">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#/home">Workout <small>tracker</small></a>
+                    </div>
+                    <div class="collapse navbar-collapse" v-bind:style="'display: ' + (showMobileMenu ? ' block' : ' none') + ';'">
+                        <ul class="nav navbar-nav">
+                            <!--<li><router-link to="/home">Home</router-link></li>-->
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#" v-on:click.prevent="_logOut">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!--<div class="row">-->
+                <!--<router-link to="/home">Home</router-link>-->
+                <!--<a href="#" class="pull-right" v-on:click.prevent="_logOut">Logout</a>-->
+            <!--</div>-->
         </div>
         <transition name="fade" mode="out-in">
             <router-view v-on:logged-in="__loggedIn" v-on:notify="__notifyListener"></router-view>

@@ -79,10 +79,15 @@ var app = new Vue({
 
     data: {
         loggedIn: false,
-        notifications: []
+        notifications: [],
+        showMobileMenu: false
     },
 
     methods: {
+
+        _mobileMenuToggle: function () {
+            this.showMobileMenu = !this.showMobileMenu;
+        },
 
         __notifyListener: function (notification) {
             this.notifications.push(notification);

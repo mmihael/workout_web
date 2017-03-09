@@ -1,11 +1,14 @@
-<div class="container">
+<div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <div v-for="workout in workouts" class="col-xs-12">
-            {{ workout.workout.name }} <button v-on:click.prevent="_startWorkout(workout.workout.id)">Start</button>
-            <br>
-            <ul>
-                <li class="text-success" v-for="exercise in workout.exercises"
-                >#{{ exercise.order }} {{ exercise.name }}</li>
+        <div v-for="workout in workouts" class="col-xs-12 col-sm-6 col-md-4">
+            <ul class="list-group">
+                <button class="list-group-item list-group-item-success" v-on:click.prevent="_startWorkout(workout.workout.id)">
+                    {{ workout.workout.name }}
+                    <i class="fa fa-play pull-right" aria-hidden="true"></i>
+                </button>
+                <li class="list-group-item" v-for="exercise in workout.exercises">
+                    #{{ exercise.order }} {{ exercise.name }}
+                </li>
             </ul>
         </div>
     </div>
