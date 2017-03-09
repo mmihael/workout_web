@@ -32,3 +32,12 @@
     width: 300px;
     padding: 0 5px 5px 0;
 }
+
+button.block-button {
+    padding: 30px 5px;
+    width: 100%;
+    font-size: 24px;
+    white-space: normal;
+    height: 100%;
+    margin-bottom: 6px;
+}

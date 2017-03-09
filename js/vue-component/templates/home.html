@@ -1,12 +1,41 @@
-<div class="container">
+<div class="container text-center">
     <div class="row">
-        <div class="col-xs-12">
-            <router-link to="/create/workout">Create workout</router-link>
-            <router-link to="/list/workouts">List workouts</router-link>
-            <router-link to="/workout/pick">Pick workout</router-link>
-            <router-link to="/list/user/workouts">Edit workout statistics</router-link>
-            <br>
-            <router-link to="/create/exercise">Create exercise</router-link>
+        <div class="col-md-4 col-sm-6">
+            <router-link to="/list/workouts">
+                <button class="btn btn-default block-button">
+                    <i class="fa fa-list text-info" aria-hidden="true"></i> List workouts
+                </button>
+            </router-link>
         </div>
+        <div class="col-md-4 col-sm-6">
+            <router-link to="/workout/pick">
+                <button class="btn btn-default block-button">
+                    <i class="fa fa-play-circle-o text-info" aria-hidden="true"></i> Pick workout
+                </button>
+            </router-link>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <router-link to="/list/user/workouts">
+                <button class="btn btn-default block-button">
+                    <i class="fa fa-edit text-info" aria-hidden="true"></i> Edit workout statistics
+                </button>
+            </router-link>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-4 col-sm-6">
+            <router-link to="/create/workout">
+                <button class="btn btn-default block-button">
+                    <i class="fa fa-plus-circle text-success" aria-hidden="true"></i> Create workout
+                </button>
+            </router-link>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <router-link to="/create/exercise">
+                <button class="btn btn-default block-button">
+                    <i class="fa fa-plus-circle text-success" aria-hidden="true"></i> Create exercise
+                </button>
+            </router-link>
+        </div>
+        <div class="col-md-4 col-sm-6"></div>
     </div>
 </div>
