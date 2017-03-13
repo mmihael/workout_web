@@ -15,9 +15,9 @@ module.exports = Vue.component('usersWorkout', {
             console.log(usersWorkoutStatistic);
             this.$http.patch(this.appConfig.baseUrl + '/api/user/workout/statistic/' + usersWorkoutStatistic.id, usersWorkoutStatistic, { headers: { 'Content-Type': 'application/json'}}).then(
                 this.authProtectedRequestSuccess(function (res) {
-                    console.log(res);
+                    this.$emit('notify', { message: 'Updated', type: 'success'});
                 }.bind(this)),
-                this.authProtectedRequestFailed(function (res) { console.log("error"); })
+                this.authProtectedRequestFailed(function (res) { this.$emit('notify', { message: 'Failed to update statistic', type: 'danger'}); })
             );
         },
 
@@ -64,6 +64,7 @@ module.exports = Vue.component('usersWorkout', {
             exercises: {},
             workoutExerciseOrder: {},
             usersWorkoutStatistics: {},
+            lastStatistics: {}
         },
         stopWatch: {
             show: false,
