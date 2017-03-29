@@ -11,6 +11,6 @@ module.exports = Vue.component('workoutList', {
 
     data: function () { return {
         workouts: []
-    }; }
+    }; },
 
 });

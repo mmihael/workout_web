@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
         <div v-for="workout in workouts" class="col-xs-12">
-            {{ workout.workout.name }}
+            <router-link v-bind:to="'/users/workout/chart/' + workout.workout.id">
+                {{ workout.workout.name }}
+            </router-link>
             <br>
             <ul>
                 <li class="text-success" v-for="exercise in workout.exercises"

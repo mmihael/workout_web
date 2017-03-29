@@ -52,6 +52,7 @@ var router = new VueRouter({
         { path: '/create/exercise', component: require('./vue-component/exercise-form.js') },
         { path: '/workout/pick', component: require('./vue-component/workout-pick.js') },
         { path: '/users/workout/:id', component: require('./vue-component/users-workout.js') },
+        { path: '/users/workout/chart/:id', component: require('./vue-component/workout-chart.js') },
         { path: '/list/user/workouts', component: require('./vue-component/users-workout-list.js') },
     ]
 
