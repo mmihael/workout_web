@@ -41,3 +41,9 @@ button.block-button {
     height: 100%;
     margin-bottom: 6px;
 }
+
+.bottom-sm-actions {
+    position: fixed;
+    left: 5px;
+    bottom: 5px;
+}

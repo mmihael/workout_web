@@ -64,7 +64,6 @@ module.exports = Vue.component('workoutChart', {
                 dataset.data.push(sum);
             }
             data.datasets.push(dataset);
-            console.log(data);
             var myChart = new Chart(document.getElementById("workout-chart"), {
                 type: 'bar',
                 data: data,

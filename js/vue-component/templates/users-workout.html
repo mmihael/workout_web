@@ -75,4 +75,9 @@
             </div>
         </div>
     </div>
+    <div v-if="!stopWatch.show" class="visible-xs visible-sm bottom-sm-actions">
+        <button class="btn btn-primary" type="button" v-on:click="_stopWatchToggle()">
+            <i style="font-size: 24px;" class="fa fa-clock-o" aria-hidden="true"></i>
+        </button>
+    </div>
 </div>
