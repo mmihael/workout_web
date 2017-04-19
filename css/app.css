@@ -47,3 +47,18 @@ button.block-button {
     left: 5px;
     bottom: 5px;
 }
+
+.router-link-chart:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.router-link-chart {
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 24px;
+    border: solid 1px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+}
