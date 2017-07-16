@@ -48,7 +48,7 @@ button.block-button {
 }
 
 button.block-button:hover { cursor: pointer; }
-button.block-button:active { transform: scale(0.99, 0.99); outline: 0; }
+button.block-button:active { transform: scale(0.9, 0.9); outline: 0; }
 button.block-button:focus { outline: 0; }
 
 .bottom-sm-actions {
