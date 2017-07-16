@@ -216,3 +216,19 @@ button.close {
 .list-group-item:last-child {
   border-radius: 0;
 }
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: #f77f00;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #f77f00;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #b97b38;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: #000000;
+}
