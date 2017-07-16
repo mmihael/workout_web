@@ -18,11 +18,11 @@
                             <td>{{ workout.createdAt }}</td>
                             <td>
                                 <router-link v-bind:to="'/users/workout/' +  workout.id">
-                                    <button class="btn btn-info" type="button">
+                                    <button class="button-main" type="button">
                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                     </button>
                                 </router-link>
-                                <button class="btn btn-danger" type="button" v-on:click="_deleteUsersWorkout(workout.id)">
+                                <button class="button-main" type="button" v-on:click="_deleteUsersWorkout(workout.id)">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Delete
                                 </button>
                             </td>

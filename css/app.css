@@ -40,7 +40,16 @@ button.block-button {
     white-space: normal;
     height: 100%;
     margin-bottom: 6px;
+    background-color: #000000;
+    color: #b97b38;
+    border: 0;
+    border-radius: 0;
+    font-size: 1.3em;
 }
+
+button.block-button:hover { cursor: pointer; }
+button.block-button:active { transform: scale(0.99, 0.99); outline: 0; }
+button.block-button:focus { outline: 0; }
 
 .bottom-sm-actions {
     position: fixed;
@@ -61,4 +70,99 @@ button.block-button {
     border-radius: 3px;
     text-decoration: none;
     display: inline-block;
+}
+
+.page-header {
+  border-bottom-color: #b97b38;
+}
+
+body {
+  font-family: "Lucida Console", Monaco, monospace;
+  background-color: #363636;
+}
+
+label {
+  color: #b97b38;
+}
+
+.button-main {
+  padding: 8px;
+  background-color: #191919;
+  color: #f77f00;
+  border-radius: 0;
+  border: 0;
+}
+
+.button-main:hover { cursor: pointer; background-color: #191919; color: #f77f00; }
+.button-main:active { transform: scale(0.95, 0.95); outline: 0; background-color: #191919; color: #f77f00; }
+.button-main:focus { outline: 0; background-color: #191919; color: #f77f00; }
+
+.title__main {
+  color: #f77f00;
+}
+
+.title__small {
+  color: #b97b38;
+  font-size: 1.2em;
+}
+
+input.form-control {
+  border-radius: 0;
+  border: 0;
+  background-color: #000000;
+  color: #999998;
+}
+
+input.form-control:active { outline: 0; border: 0; box-shadow: 0 0 1px #f77f00; }
+input.form-control:focus { outline: 0; border: 0; box-shadow: 0 0 1px #f77f00; }
+
+nav.navbar.navbar-default {
+  background-color: #000000;
+  border: 0;
+  border-radius: 0;
+}
+
+.navbar-default .navbar-brand {
+  color: #b97b38;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:active{
+  color: #f77f00;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #b97b38;
+}
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:active,
+.navbar-default .navbar-nav>li>a:focus {
+  color: #f77f00;
+}
+
+i.fa {
+  color: #f77f00;
+}
+
+.table td{
+    border: #000000 solid 1px !important;
+    color: #b97b38;
+}
+
+.table th{
+    border: #000000 solid 1px !important;
+}
+
+.table thead tr > th {
+  background-color: #000000 !important;
+  color: #f77f00;
+}
+
+.table tbody tr:nth-child(odd) > td {
+  background-color: #2e2e2e !important;
+}
+
+.table tbody tr:nth-child(even) > td {
+  background-color: #424242 !important;
 }
