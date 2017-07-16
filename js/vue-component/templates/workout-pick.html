@@ -2,7 +2,7 @@
     <div class="row">
         <div v-for="workout in workouts" class="col-xs-12 col-sm-6 col-md-4">
             <ul class="list-group">
-                <button class="list-group-item list-group-item-success" v-on:click.prevent="_startWorkout(workout.workout.id)">
+                <button class="list-group-item title__main black" v-on:click.prevent="_startWorkout(workout.workout.id)">
                     {{ workout.workout.name }}
                     <i class="fa fa-play pull-right" aria-hidden="true"></i>
                 </button>

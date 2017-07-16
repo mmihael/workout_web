@@ -79,10 +79,12 @@ button.block-button:focus { outline: 0; }
 body {
   font-family: "Lucida Console", Monaco, monospace;
   background-color: #363636;
+  color: #b97b38;
 }
 
 label {
   color: #b97b38;
+  font-size: 0.9em;
 }
 
 .button-main {
@@ -98,7 +100,7 @@ label {
 .button-main:focus { outline: 0; background-color: #191919; color: #f77f00; }
 
 .title__main {
-  color: #f77f00;
+  color: #f77f00 !important;
 }
 
 .title__small {
@@ -165,4 +167,52 @@ i.fa {
 
 .table tbody tr:nth-child(even) > td {
   background-color: #424242 !important;
+}
+
+.modal-content {
+  background-color: #363636;
+  border-radius: 0;
+}
+
+hr {
+  border-color: #f77f00;
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #f77f00;
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #f77f00;
+}
+
+button.close {
+  color: #f77f00;
+}
+
+.list-group-item {
+  background-color: #424242;
+  border-color: #000000;
+}
+
+.black,
+.black:hover,
+.black:active,
+.black:focus {
+    background-color: #000000 !important;
+}
+
+.list-group-item:first-child,
+.list-group-item:first-child:hover,
+.list-group-item:first-child:active,
+.list-group-item:first-child:focus {
+  outline: 0;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child {
+  border-radius: 0;
 }

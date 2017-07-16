@@ -10,6 +10,10 @@ module.exports = Vue.component('usersWorkoutList', {
     },
 
     methods: {
+        _yyyymmdd: function (date) {
+          var date = new Date(date);
+          return date.getFullYear() + '-' + (parseInt(date.getMonth()) + 1) + '-' + date.getDate();
+        },
         _deleteUsersWorkout: function (usersWorkoutId) {
             this.$http.delete(this.appConfig.baseUrl + '/api/user/workout/' + usersWorkoutId).then(
                 this.authProtectedRequestSuccess(function (res) {

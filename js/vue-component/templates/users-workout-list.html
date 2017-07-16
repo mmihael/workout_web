@@ -15,7 +15,7 @@
                         <tr v-for="workout in usersWorkouts">
                             <td>#{{ workout.id }}</td>
                             <td>{{ workout.workoutName }}</td>
-                            <td>{{ workout.createdAt }}</td>
+                            <td>{{ _yyyymmdd(workout.createdAt) }}</td>
                             <td>
                                 <router-link v-bind:to="'/users/workout/' +  workout.id">
                                     <button class="button-main" type="button">

@@ -1,10 +1,11 @@
 <div class="container">
-    <div v-for="workout in workouts" class="row">
-        <div class="col-xs-12">
-            <router-link class="router-link-chart" v-bind:to="'/users/workout/chart/' + workout.workout.id">
-                <i class="fa fa-bar-chart" aria-hidden="true"></i> {{ workout.workout.name }}
+    <div class="row">
+        <div class="col-md-4 col-sm-6" v-for="workout in workouts">
+            <router-link v-bind:to="'/users/workout/chart/' + workout.workout.id">
+                <button class="block-button">
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i> {{ workout.workout.name }}
+                </button>
             </router-link>
-            <br>
         </div>
     </div>
 </div>

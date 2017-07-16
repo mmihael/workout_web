@@ -1,16 +1,16 @@
 <div class="container" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-xs-12 text-right">
-            <span class="text-success pull-left">{{ usersWorkout.workout.name }}</span>
-            <button class="btn btn-primary" type="button" v-on:click="_stopWatchToggle()">
-                <i style="font-size: 24px;" class="fa fa-clock-o" aria-hidden="true"></i>
+            <span class="text-success pull-left title__main">{{ usersWorkout.workout.name }}</span>
+            <button class="button-main" type="button" v-on:click="_stopWatchToggle()">
+                &nbsp;<i style="font-size: 24px;" class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
             </button>
             <hr>
         </div>
     </div>
     <div class="row" v-for="(exerciseOrder, id) in usersWorkout.workoutExerciseOrder">
         <div class="col-md-6 col-xs-12">
-            #<span class="text-muted">{{ id }}</span> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}
+            #<strong>{{ id }}</strong> {{ usersWorkout.exercises[exerciseOrder.exercise].name }}
         </div>
         <!--<div class="col-xs-6">-->
         <div class="form-inline">
@@ -65,19 +65,19 @@
                                 <label for="stopWatch.seconds">Seconds</label>
                                 <input v-model="stopWatch.total" type="number" class="form-control" id="stopWatch.seconds" placeholder="Seconds">
                             </div>
-                            <button style="width: 100%;" class="btn btn-success" v-on:click="_stopWatchStart()">Start</button>
+                            <button style="width: 100%;" class="button-main" v-on:click="_stopWatchStart()">Start</button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button v-on:click.stop="_stopWatchToggle()" type="button" class="btn btn-default">Close</button>
+                    <button v-on:click.stop="_stopWatchToggle()" type="button" class="button-main">Close</button>
                 </div>
             </div>
         </div>
     </div>
     <div v-if="!stopWatch.show" class="visible-xs visible-sm bottom-sm-actions">
-        <button class="btn btn-primary" type="button" v-on:click="_stopWatchToggle()">
-            <i style="font-size: 24px;" class="fa fa-clock-o" aria-hidden="true"></i>
+        <button class="button-main" type="button" v-on:click="_stopWatchToggle()">
+            &nbsp;<i style="font-size: 24px;" class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
         </button>
     </div>
 </div>
