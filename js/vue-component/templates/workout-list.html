@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4 col-sm-6" v-for="workout in workouts">
             <router-link v-bind:to="'/users/workout/chart/' + workout.workout.id">
-                <button class="block-button">
+                <button class="block-button" type="button">
                     <i class="fa fa-bar-chart" aria-hidden="true"></i> {{ workout.workout.name }}
                 </button>
             </router-link>
