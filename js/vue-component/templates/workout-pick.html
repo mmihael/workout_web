@@ -2,7 +2,7 @@
     <div class="row">
         <div v-for="workout in workouts" class="col-xs-12 col-sm-6 col-md-4">
             <ul class="list-group">
-                <button class="list-group-item title__main black" v-on:click.prevent="_startWorkout(workout.workout.id)">
+                <button class="list-group-item title__main black" v-on:click.prevent="_modalToggle(workout.workout.id)">
                     {{ workout.workout.name }}
                     <i class="fa fa-play pull-right" aria-hidden="true"></i>
                 </button>
@@ -10,6 +10,33 @@
                     #{{ exercise.order }} {{ exercise.name }}
                 </li>
             </ul>
+        </div>
+    </div>
+    <div v-if="modalShow" class="custom-modal-container" v-on:click.self="_modalToggle()">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button v-on:click.stop="_modalToggle()" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Start exercise</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <button v-on:click="_startBlankWorkout()" class="block-button" type="button">
+                                Start blank
+                            </button>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <button v-on:click="_startWithLastWorkoutSetup()" class="block-button" type="button">
+                                Copy last setup
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button v-on:click.stop="_modalToggle()" type="button" class="button-main">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

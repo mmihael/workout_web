@@ -10,20 +10,36 @@ module.exports = Vue.component('workoutPick', {
     },
 
     methods: {
-        _startWorkout: function (workoutId) {
-            this.$http.post(this.appConfig.baseUrl + '/api/user/workout', { workout: workoutId }, { headers: { 'Content-Type': 'application/json'}}).then(
+        _resetRequest: function () {
+            this.request.copyLast = false;
+        },
+        _startWorkout: function () {
+            this.$http.post(this.appConfig.baseUrl + '/api/user/workout', this.request, { headers: { 'Content-Type': 'application/json'}}).then(
                 this.authProtectedRequestSuccess(function (res) {
                     console.log(res);
                     console.log(res.body.usersWorkout.id);
                     this.$router.push('/users/workout/' + res.body.usersWorkout.id);
                 }.bind(this)),
-                this.authProtectedRequestFailed(function (res) { console.log("error"); })
+                this.authProtectedRequestFailed(function (res) { this._resetRequest(); console.log("error"); }.bind(this))
             );
+        },
+        _startBlankWorkout: function () { this._startWorkout(); },
+        _startWithLastWorkoutSetup: function () {
+            this.request.copyLast = true;
+            this._startWorkout();
+        },
+        _modalToggle: function (workoutId) {
+            this.modalShow = !this.modalShow;
+            this.request.workout = workoutId;
         }
     },
-
     data: function () { return {
-        workouts: []
+        workouts: [],
+        modalShow: false,
+        request: {
+            workout: null,
+            copyLast: false
+        }
     }; }
 
 });
